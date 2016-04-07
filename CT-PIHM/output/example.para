@@ -1,0 +1,42 @@
+INIT_MODE           	3	# Initialization type 0: Relaxation, 1: use .att file, 3: use .init file
+ASCII_OUTPUT        	1	# Write ASCII output? 0: no, 1: yes
+WRITE_IC            	0	# Spin-up mode, 0: Standard model run, 1: Outputs will be writtedn to .init files
+UNSAT_MODE          	2
+SURF_MODE           	2
+RIV_MODE            	2
+SOLVER              	2
+ABSTOL              	1E-04
+RELTOL              	1E-03
+INIT_SOLVER_STEP    	1E-05
+MAX_SOLVER_STEP     	60	# Maximum solver step (DANGER ZONE)
+LSM_STEP            	60	# LSM (or ET) step size (unit: s)
+START               	2009-01-01 00:00
+END                 	2010-01-01 00:00
+OUTPUT_TYPE         	0
+MODEL_STEPSIZE      	60	# PIHM step size (unit: s)
+###############################################################################
+# OUTPUT CONTROL:                                                             #
+#  All options are listed below.                                              #
+#  Use '#' to comment out the variables you do not want to output, or set     #
+#  the output interval (in minutes) to 0.                                     #
+###############################################################################
+GW                  	3600
+SURF                	3600
+SNOW                	3600
+RIVSTG              	3600
+RECHARGE            	3600
+CMC                 	3600
+UNSAT               	3600
+EC                  	3600
+ETT                 	3600
+EDIR                	3600
+RIVFLX0             	3600
+RIVFLX1             	3600
+RIVFLX2             	3600
+RIVFLX3             	3600
+RIVFLX4             	3600
+RIVFLX5             	3600
+RIVFLX6             	3600
+RIVFLX7             	3600
+RIVFLX8             	3600
+RIVFLX9             	3600
