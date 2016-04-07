@@ -308,235 +308,11 @@ void read_alloc(char *filename, Model_Data DS, Control_Data *CS)
   	printf("done.\n");
 
   
-  	/*========== open *.forc file ==========*/  
-  	printf("\n  7) reading %s.forc ... ", filename);
-  	fn[6] = (char *)malloc((strlen(filename)+5)*sizeof(char));
-  	strcpy(fn[6], filename);
-  	forc_file = fopen(strcat(fn[6], ".forc"), "r");
-  
-  	if(forc_file == NULL)
-  	{
-    	printf("\n  Fatal Error: %s.forc is in use or does not exist!\n", filename);
-    	exit(1);
-  	}
-  
-  	/* start reading forc_file */
-  	fscanf(forc_file, "%d %d", &DS->NumPrep, &DS->NumTemp);
-  	fscanf(forc_file, "%d %d", &DS->NumHumidity, &DS->NumWindVel);
-  	fscanf(forc_file, "%d %d", &DS->NumRn, &DS->NumG);
-  	fscanf(forc_file, "%d %d", &DS->NumP, &DS->NumLC);
-  	fscanf(forc_file, "%d", &DS->NumMeltF);
-  	fscanf(forc_file, "%d", &DS->NumSource);
-  
-  	DS->TSD_Prep = (TSD *)malloc(DS->NumPrep*sizeof(TSD));
-  	DS->TSD_Temp = (TSD *)malloc(DS->NumTemp*sizeof(TSD));
-  	DS->TSD_Humidity = (TSD *)malloc(DS->NumHumidity*sizeof(TSD));
-  	DS->TSD_WindVel = (TSD *)malloc(DS->NumWindVel*sizeof(TSD));
-  	DS->TSD_Rn = (TSD *)malloc(DS->NumRn*sizeof(TSD));
-  	DS->TSD_G = (TSD *)malloc(DS->NumG*sizeof(TSD));
-  	DS->TSD_Pressure = (TSD *)malloc(DS->NumP*sizeof(TSD));
-  	DS->TSD_LAI = (TSD *)malloc(DS->NumLC*sizeof(TSD));
-  	DS->TSD_RL = (TSD *)malloc(DS->NumLC*sizeof(TSD));  
-  	DS->TSD_MeltF = (TSD *)malloc(DS->NumMeltF*sizeof(TSD));
-  	DS->TSD_Source = (TSD *)malloc(DS->NumSource*sizeof(TSD));
-  
-  	DS->ISFactor = (double *)malloc(DS->NumLC*sizeof(double));
-  	DS->windH = (double *)malloc(DS->NumWindVel*sizeof(double));
-     
-  	for(i=0; i<DS->NumPrep; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d", DS->TSD_Prep[i].name, &DS->TSD_Prep[i].index, &DS->TSD_Prep[i].length);
-    
-    		DS->TSD_Prep[i].TS = (double **)malloc((DS->TSD_Prep[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_Prep[i].length; j++)
-    			{
-      			DS->TSD_Prep[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_Prep[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_Prep[i].TS[j][0], &DS->TSD_Prep[i].TS[j][1]);
-    			}
-  		}  
-  
-  	for(i=0; i<DS->NumTemp; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d", DS->TSD_Temp[i].name, &DS->TSD_Temp[i].index, &DS->TSD_Temp[i].length);
-    
-    		DS->TSD_Temp[i].TS = (double **)malloc((DS->TSD_Temp[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_Temp[i].length; j++)
-    			{
-      			DS->TSD_Temp[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_Temp[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_Temp[i].TS[j][0], &DS->TSD_Temp[i].TS[j][1]);
-    			}
-  		} 
-  
-  	for(i=0; i<DS->NumHumidity; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d", DS->TSD_Humidity[i].name, &DS->TSD_Humidity[i].index, &DS->TSD_Humidity[i].length);
-    
-    		DS->TSD_Humidity[i].TS = (double **)malloc((DS->TSD_Humidity[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_Humidity[i].length; j++)
-    			{
-      			DS->TSD_Humidity[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_Humidity[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_Humidity[i].TS[j][0], &DS->TSD_Humidity[i].TS[j][1]);
-    			}
-  		} 
-  
-  	for(i=0; i<DS->NumWindVel; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d %lf", DS->TSD_WindVel[i].name, &DS->TSD_WindVel[i].index, &DS->TSD_WindVel[i].length, &DS->windH[i]);
-    		DS->TSD_WindVel[i].TS = (double **)malloc((DS->TSD_WindVel[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_WindVel[i].length; j++)
-    			{
-      			DS->TSD_WindVel[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_WindVel[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_WindVel[i].TS[j][0], &DS->TSD_WindVel[i].TS[j][1]);
-    			}
-  		} 
-
-  	for(i=0; i<DS->NumRn; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d", DS->TSD_Rn[i].name, &DS->TSD_Rn[i].index, &DS->TSD_Rn[i].length);
-    
-    		DS->TSD_Rn[i].TS = (double **)malloc((DS->TSD_Rn[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_Rn[i].length; j++)
-    			{
-      			DS->TSD_Rn[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_Rn[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_Rn[i].TS[j][0], &DS->TSD_Rn[i].TS[j][1]);
-    			}
-  		} 
-
-  	for(i=0; i<DS->NumG; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d", DS->TSD_G[i].name, &DS->TSD_G[i].index, &DS->TSD_G[i].length);
-    
-    		DS->TSD_G[i].TS = (double **)malloc((DS->TSD_G[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_G[i].length; j++)
-    			{
-      			DS->TSD_G[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_G[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_G[i].TS[j][0], &DS->TSD_G[i].TS[j][1]);
-    			}
-  		} 
-
-  	for(i=0; i<DS->NumP; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d", DS->TSD_Pressure[i].name, &DS->TSD_Pressure[i].index, &DS->TSD_Pressure[i].length);
-    
-    		DS->TSD_Pressure[i].TS = (double **)malloc((DS->TSD_Pressure[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_Pressure[i].length; j++)
-    			{
-      			DS->TSD_Pressure[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_Pressure[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_Pressure[i].TS[j][0], &DS->TSD_Pressure[i].TS[j][1]);
-    			}
-  		} 
-
-  	for(i=0; i<DS->NumLC; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d %lf", DS->TSD_LAI[i].name, &DS->TSD_LAI[i].index, &DS->TSD_LAI[i].length, &DS->ISFactor[i]);
-    
-    		DS->TSD_LAI[i].TS = (double **)malloc((DS->TSD_LAI[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_LAI[i].length; j++)
-    			{
-      			DS->TSD_LAI[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_LAI[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_LAI[i].TS[j][0], &DS->TSD_LAI[i].TS[j][1]);
-    			}
-  		} 
-
-  	for(i=0; i<DS->NumLC; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d", DS->TSD_RL[i].name, &DS->TSD_RL[i].index, &DS->TSD_RL[i].length);
-    
-    		DS->TSD_RL[i].TS = (double **)malloc((DS->TSD_RL[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_RL[i].length; j++)
-    			{
-      			DS->TSD_RL[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_RL[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_RL[i].TS[j][0], &DS->TSD_RL[i].TS[j][1]);
-    			}
-  		} 
-  
-  	for(i=0; i<DS->NumMeltF; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d", DS->TSD_MeltF[i].name, &DS->TSD_MeltF[i].index, &DS->TSD_MeltF[i].length);
-    
-    		DS->TSD_MeltF[i].TS = (double **)malloc((DS->TSD_MeltF[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_MeltF[i].length; j++)
-    			{
-      			DS->TSD_MeltF[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_MeltF[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_MeltF[i].TS[j][0], &DS->TSD_MeltF[i].TS[j][1]);
-    			}
-  		} 
-  
-  	for(i=0; i<DS->NumSource; i++)
-  		{
-    		fscanf(forc_file, "%s %d %d", DS->TSD_Source[i].name, &DS->TSD_Source[i].index, &DS->TSD_Source[i].length);
-    
-    		DS->TSD_Source[i].TS = (double **)malloc((DS->TSD_Source[i].length)*sizeof(double));
-    
-    		for(j=0; j<DS->TSD_Source[i].length; j++)
-    			{
-      			DS->TSD_Source[i].TS[j] = (double *)malloc(2*sizeof(double));
-    			}
-    
-    		for(j=0; j<DS->TSD_Source[i].length; j++)
-    			{
-      			fscanf(forc_file, "%lf %lf", &DS->TSD_Source[i].TS[j][0], &DS->TSD_Source[i].TS[j][1]);
-    			}
-  		} 
-
-  	fclose(forc_file);
-  	printf("done.\n");
-      
   	/*========== open *.ibc file ==========*/     
-  	printf("\n  8) reading %s.ibc  ... ", filename);  
-  	fn[7] = (char *)malloc((strlen(filename)+4)*sizeof(char));
-  	strcpy(fn[7], filename);
-  	ibc_file =  fopen(strcat(fn[7], ".ibc"), "r");
+  	printf("\n  7) reading %s.ibc  ... ", filename);  
+  	fn[6] = (char *)malloc((strlen(filename)+4)*sizeof(char));
+  	strcpy(fn[6], filename);
+  	ibc_file =  fopen(strcat(fn[6], ".ibc"), "r");
   
   	if(ibc_file == NULL)
   		{
@@ -596,10 +372,10 @@ void read_alloc(char *filename, Model_Data DS, Control_Data *CS)
   	printf("done.\n");
   
   	/*========== open *.para file ==========*/ 
-  	printf("\n  9) reading %s.para ... ", filename); 
-  	fn[8] = (char *)malloc((strlen(filename)+5)*sizeof(char));
-  	strcpy(fn[8], filename);
-  	para_file = fopen(strcat(fn[8], ".para"), "r");  
+  	printf("\n  8) reading %s.para ... ", filename); 
+  	fn[7] = (char *)malloc((strlen(filename)+5)*sizeof(char));
+  	strcpy(fn[7], filename);
+  	para_file = fopen(strcat(fn[7], ".para"), "r");  
   
   	if(para_file == NULL)
   		{
@@ -678,10 +454,10 @@ void read_alloc(char *filename, Model_Data DS, Control_Data *CS)
 /*	printf("\nStart reading in calibration file...\n");*/
 
 	/*========= open *.calib file ==========*/
-	printf("\n  10) reading %s.calib ... ", filename);
-        fn[9] = (char *)malloc((strlen(filename)+6)*sizeof(char));
-        strcpy(fn[9], filename);
-        global_calib = fopen(strcat(fn[9], ".calib"), "r");
+	printf("\n  9) reading %s.calib ... ", filename);
+        fn[8] = (char *)malloc((strlen(filename)+6)*sizeof(char));
+        strcpy(fn[8], filename);
+        global_calib = fopen(strcat(fn[8], ".calib"), "r");
 
         if(global_calib == NULL)
                 {

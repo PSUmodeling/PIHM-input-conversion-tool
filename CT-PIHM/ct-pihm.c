@@ -72,10 +72,10 @@ int main(int argc, char *argv[])
   
   	printf("\n ...  Input file conversion is starting ... \n");
  
- 	/* read in 9 input files with "filename" as prefix */
+ 	/* read in input files with "filename" as prefix */
   	read_alloc(filename, mData, &cData);
 	
-	printf("\nStart writing new input files for PIHM-MF ...\n");
+	printf("\nStart writing new input files for MM-PIHM ...\n");
 	
 	/* time conversion */
 	printf("\nPlease enter Start time in original PIHM time series:\n");
