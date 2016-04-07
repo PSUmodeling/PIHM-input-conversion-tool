@@ -1,5 +1,5 @@
 # ct-pihm
-A simple tool to convert old version of pihm to PIHM-MF
+A simple tool to convert old version of pihm to MM-PIHM
 
 Instruction:
 - Put old version of input files into current folder;
