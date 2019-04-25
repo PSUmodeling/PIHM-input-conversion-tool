@@ -1,42 +1,57 @@
-INIT_MODE           	3	# Initialization type 0: Relaxation, 1: use .att file, 3: use .init file
-ASCII_OUTPUT        	1	# Write ASCII output? 0: no, 1: yes
-WRITE_IC            	0	# Spin-up mode, 0: Standard model run, 1: Outputs will be writtedn to .init files
-UNSAT_MODE          	2
-SURF_MODE           	2
-RIV_MODE            	2
-SOLVER              	2
-ABSTOL              	1E-04
-RELTOL              	1E-03
-INIT_SOLVER_STEP    	1E-05
-MAX_SOLVER_STEP     	60	# Maximum solver step (DANGER ZONE)
-LSM_STEP            	60	# LSM (or ET) step size (unit: s)
-START               	2009-01-01 00:00
-END                 	2010-01-01 00:00
-OUTPUT_TYPE         	0
-MODEL_STEPSIZE      	60	# PIHM step size (unit: s)
-###############################################################################
-# OUTPUT CONTROL:                                                             #
-#  All options are listed below.                                              #
-#  Use '#' to comment out the variables you do not want to output, or set     #
-#  the output interval (in minutes) to 0.                                     #
-###############################################################################
-GW                  	3600
-SURF                	3600
-SNOW                	3600
-RIVSTG              	3600
-RECHARGE            	3600
-CMC                 	3600
-UNSAT               	3600
-EC                  	3600
-ETT                 	3600
-EDIR                	3600
-RIVFLX0             	3600
-RIVFLX1             	3600
-RIVFLX2             	3600
-RIVFLX3             	3600
-RIVFLX4             	3600
-RIVFLX5             	3600
-RIVFLX6             	3600
-RIVFLX7             	3600
-RIVFLX8             	3600
-RIVFLX9             	3600
+SIMULATION_MODE     0                   # simulation type: 1 = spinup simulation, 0 = normal simulation
+INIT_MODE           0                   # initialization type 0: relaxation, 1: use .ic file
+ASCII_OUTPUT        1                   # write ASCII output? 0: no, 1: yes
+WATBAL_OUTPUT       0                   # write water balance? 0: no, 1: yes
+WRITE_IC            1                   # write initial condition? 0 = no, 1 = outputs will be written to restart directory
+UNSAT_MODE          2                   # unsaturation formulation: 1 = kinematic, 2 = diffusion
+SURF_MODE           2                   # surface overland flow formulation: 1 = kinematic, 2 = diffusion
+RIV_MODE            2                   # river routing formulation: 1 = kinematic, 2 = diffusion
+START               2000-01-01 01:01
+END                 2000-12-31 01:01
+MAX_SPINUP_YEAR     50                  # maximum number of spinup years (if spinup simulation)
+MODEL_STEPSIZE      60                  # model step size (s)
+LSM_STEP            60                  # land surface (ET) step size (s)
+################################################################################
+# CVode parameters                                                             #
+################################################################################
+ABSTOL              1.0E-04             # absolute solver tolerance (m)
+RELTOL              1.0E-03             # relative solver tolerance (-)
+INIT_SOLVER_STEP    1.0E-05             # initial solver step size (s)
+NUM_NONCOV_FAIL     0.0                 # Number of non-convergence failures
+MAX_NONLIN_ITER     3.0                 # Maximum number of non-linear 
+MIN_NONLIN_ITER     1.0                 # Minimum number of non-linear iterations
+DECR_FACTOR         1.2                 # CVode max step decrease factor
+INCR_FACTOR         1.2                 # CVode max step increase factor
+MIN_MAXSTEP         1.0                 # Minimum CVode max step (s)
+################################################################################
+# OUTPUT CONTROL                                                               #
+# Output intervals can be "YEARLY", "MONTHLY", "DAILY", "HOURLY", or any       #
+# positive integer to indicate intervals in seconds. Setting interval to 0     #
+# will turn off the output for the corresponding variable.                     #
+################################################################################
+SURF                HOURLY
+UNSAT               HOURLY
+GW                  HOURLY
+RIVSTG              HOURLY
+RIVGW               HOURLY
+SNOW                HOURLY
+CMC                 HOURLY
+INFIL               HOURLY
+RECHARGE            HOURLY
+EC                  HOURLY
+ETT                 HOURLY
+EDIR                HOURLY
+RIVFLX0             HOURLY
+RIVFLX1             HOURLY
+RIVFLX2             HOURLY
+RIVFLX3             HOURLY
+RIVFLX4             HOURLY
+RIVFLX5             HOURLY
+RIVFLX6             HOURLY
+RIVFLX7             HOURLY
+RIVFLX8             HOURLY
+RIVFLX9             HOURLY
+RIVFLX10            HOURLY
+SUBFLX              HOURLY
+SURFFLX             HOURLY
+IC                  MONTHLY

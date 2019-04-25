@@ -1,41 +1,28 @@
-KSATH               	1.0	# Horizontal saturated hydraulic conductivity
-KSATV               	1.0	# Vertital saturated hydraulic conductivity
-KINF                	1.0	# Infiltration conductivity
-KMACSATH            	1.0	# Horizontal saturated macropore hydraulic conductivity
-KMACSATV            	1.0	# Vertital saturated macropore hydraulic conductivity
-DINF                	1.0	# Infiltration depth
-DROOT               	1.0	# Rooting depth
-DMAC                	1.0	# Macropore depth
-POROSITY            	1.0
-ALPHA               	1.0
-BETA                	1.0
-MACVF               	1.0
-MACHF               	1.0
-VEGFRAC             	1.0
-ALBEDO              	1.0
-ROUGH               	1.0
-PRCP                	1.0
-SFCTMP              	1.0
-EC                  	1.0
-ETT                 	1.0
-EDIR                	1.0
-ROUGH_RIV           	1.0
-KRIVH               	1.0
-KRIVV               	1.0
-BEDTHCK             	1.0
-RIV_DPTH            	1.0
-RIV_WDTH            	1.0
-###############################################################################
-# LSM calibration:                                                            #
-#  Use '#' to comment out the variables if you are not using the LSM module   #
-###############################################################################
-#DRIP               	1.0
-#CMCMAX             	1.0
-#RS                 	1.0
-#CZIL               	1.0
-#FXEXP              	1.0
-#CFACTR             	1.0
-#RGL                	1.0
-#HS                 	1.0
-#REFSMC             	1.0
-#WLTSMC             	1.0
+KSATH               1.0     # horizontal saturated hydraulic conductivity
+KSATV               1.00    # vertital saturated hydraulic conductivity
+KINF                1.00    # infiltration conductivity
+KMACSATH            1.00    # macropore horizontal saturated hydraulic conductivity
+KMACSATV            1.00    # macropore vertical saturated hydraulic conductivity
+DINF                1.00    # depth of infiltration layer
+DROOT               1.00    # rooting depth
+DMAC                1.00    # macropore depth
+POROSITY            1.00    # soil porosity
+ALPHA               1.00    # van Genuchten alpha
+BETA                1.00    # van Genuchten beta (n)
+MACVF               1.00    # macropore area fraction on a vertical cross-section
+MACHF               1.00    # macropore area fraction on a horizontal cross-section
+VEGFRAC             1.00    # areal fractional coverage of green vegetation
+ALBEDO              1.00    # surface albedo
+ROUGH               1.00    # surface roughness (Manning's n)
+EC                  1.00    # canopy water evaporation
+ETT                 1.00    # total plant transpiration
+EDIR                1.00    # direct soil evaporation
+ROUGH_RIV           1.00    # river channel roughness
+KRIVH               1.00    # bank hydraulic conductivity
+KRIVV               1.00    # bed hydraulic conductivity
+BEDTHCK             1.00    # bed thickness
+RIV_DPTH            1.00    # river channel depth
+RIV_WDTH            1.00    # river channel width
+SCENARIO
+PRCP                1.00    # precipitation multiplier
+SFCTMP              1.00    # air temperature offset (K)
